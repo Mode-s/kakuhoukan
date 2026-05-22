@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import footerBg from '../assets/images/footer-bg.png';
+import footerLogo from '../assets/images/footer-logo.gif';
+---
+<footer class="footer">
+  <div class="inner">
+    <div class="logo-wrapper">
+      <Image src={footerLogo} alt="おやど 鶴峯館" />
+    </div>
+    <div class="info">
+      <address class="address">
+        <p>〒012-0183<br>秋田県湯沢市皆瀬字小湯ノ上3-14</p>
+        <dl class="contact">
+          <div class="contact__row">
+            <dt>TEL</dt>
+            <dd>0183-47-5335</dd>
+          </div>
+          <div class="contact__row">
+            <dt>FAX</dt>
+            <dd>0183-47-5228</dd>
+          </div>
+        </dl>
+      </address>
+      <dl class="hours">
+        <div class="hours__row">
+          <dt>チェックイン</dt>
+          <dd>15:00 〜</dd>
+        </div>
+        <div class="hours__row">
+          <dt>チェックアウト</dt>
+          <dd>〜 10:00</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  <small class="copyright">&copy; 2026 鶴峯館</small>
+</footer>
+
+<style lang="scss" define:vars={{ footerBgUrl: `url(${footerBg.src})` }}>
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+  
+  .footer {
+    width: 100%;
+    background-image: var(--footerBgUrl);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+    padding: 80px 20px 0;
+  }
+
+  .inner {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+
+    @include tablet {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+  }
+
+  .logo-wrapper {
+    flex-shrink: 0;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    font-size: 0.875rem;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
+
+  .address p {
+    margin-bottom: 12px;
+  }
+
+  .contact__row,
+  .hours__row {
+    display: flex;
+    gap: 16px;
+
+    dt {
+      min-width: 8em;
+      font-weight: normal;
+      position: relative;
+
+      &::after {
+        content: ':';
+        position: absolute;
+        right: 0;
+      }
+    }
+  }
+
+  .hours {
+    padding-top: 16px;
+    border-top: 1px solid rgba(232, 224, 200, 0.3);
+  }
+
+  .copyright {
+    display: block;
+    margin-top: 60px;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    opacity: 0.7;
+    @include tablet {
+      margin-top: 40px;
+    }
+  }
+</style>

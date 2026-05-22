@@ -1,0 +1,34 @@
+@use 'variables' as *;
+
+@mixin tablet {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin sp {
+  @media (max-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin pc {
+  @media (max-width: $bp-pc) {
+    @content;
+  }
+}
+
+@mixin cover-media {
+  :global(picture) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}

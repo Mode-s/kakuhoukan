@@ -1,0 +1,56 @@
+---
+import { Picture } from 'astro:assets';
+import logo from '../assets/images/logo.png';
+---
+<header class="header">
+  <div class="header-inner">
+    <h1 class="logo-wrapper">
+      <a href="/" class="logo-link">
+        <Picture src={logo} alt="おやど 鶴峯館" />
+      </a>
+    </h1>
+    <navigation class="navigation">
+      <ul class="list">
+        <li class="item"><a href="/" class="link">ホーム</a></li>
+        <li class="item"><a href="/" class="link">ごあいさつ</a></li>
+        <li class="item"><a href="/" class="link">館内・料金</a></li>
+        <li class="item"><a href="/" class="link">当館について</a></li>
+        <li class="item"><a href="/" class="link">アクセス</a></li>
+        <li class="item"><a href="/" class="link">予約</a></li>
+      </ul>
+    </navigation>
+  </div>
+</header>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+  
+  .header {
+    width: 100%;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 10px 50px 10px 0;
+  }
+
+  .navigation {
+    @include tablet {
+      display: none;
+    }
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 20px;
+    padding-top: 40px;
+    writing-mode: vertical-lr;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import { Picture } from 'astro:assets';
+import bg01 from '../assets/images/bg01.jpg';
+import bg02 from '../assets/images/bg02.jpg';
+import bg03 from '../assets/images/bg03.jpg';
+import bg04 from '../assets/images/bg04.jpg';
+import bg05 from '../assets/images/bg05.jpg';
+const slides = [bg01, bg02, bg03, bg04, bg05];
+---
+
+<div class="bg" aria-hidden="true">
+  {slides.map((src, i) => (
+    <div class={`bg__slide bg__slide--${i + 1}`}>
+      <Picture src={ src } alt="" widths={[768, 1280, 1920, 2560]}
+      sizes="100vw"
+      loading={i === 0 ? 'eager' : 'lazy'}
+      decoding="async"
+      formats={['avif', 'webp']}
+    />
+    </div>
+  ))}
+  <div class="bg__overlay"></div>
+</div>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+  
+  .bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .bg__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation-name: bg-fade;
+    animation-duration: $bg-total-duration;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    @include cover-media;
+  }
+
+  .bg__slide--1 {
+    opacity: 1;
+    animation-delay: calc(0 * #{$bg-slide-duration});
+  }
+
+  .bg__slide--2 { animation-delay: calc(1 * #{$bg-slide-duration}); }
+  .bg__slide--3 { animation-delay: calc(2 * #{$bg-slide-duration}); }
+  .bg__slide--4 { animation-delay: calc(3 * #{$bg-slide-duration}); }
+  .bg__slide--5 { animation-delay: calc(4 * #{$bg-slide-duration}); }
+
+  @keyframes bg-fade {
+    0% { opacity: 0; }
+    5% { opacity: 1; }
+    20% { opacity: 1; }
+    25% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  .bg__overlay {
+    position: absolute;
+    inset: 0;
+    background: $color-overlay;
+    pointer-events: none; // クリック等をブロックしない
+    z-index: 1;           // スライドより前面
+  }
+</style>

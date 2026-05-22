@@ -1,0 +1,131 @@
+---
+import goaisatsuBg from '../assets/images/goaisatsu-bg.png';
+---
+
+<section class="section goaisatsu">
+  <div class="inner">
+    <div class="title-wrapper">
+      <h2 class="title">ご挨拶</h2>
+    </div>
+
+    <div class="content">
+      <div class="body">
+        <p>鶴峯館へようこそ。</p>
+        <p>私どもの宿は、深い渓谷と豊かな自然に抱かれた、小さな湯の宿でございます。</p>
+        <p>代々受け継がれた手作りの郷土料理と、肌に優しい源泉のお湯、そして山里ならではの静けさをもちまして、皆さまをお待ち申し上げております。</p>
+        <p>どうぞごゆるりと、寛ぎのひとときをお過ごしくださいませ。</p>
+      </div>
+
+      <p class="signature">鶴峯館</p>
+    </div>
+  </div>
+</section>
+
+<style lang="scss" define:vars={{ goaisatsuBgUrl: `url(${goaisatsuBg.src})` }}>
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .goaisatsu {
+    position: relative;
+    isolation: isolate;
+    background-image: var(--goaisatsuBgUrl);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65); // 可読性確保のオーバーレイ
+      z-index: -1;
+    }
+  }
+
+  .title-wrapper {
+    text-align: center;
+  }
+
+  // About.astro と同じ装飾線パターン
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3em;
+    margin: 60px auto 0;
+  }
+
+  .lead {
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 32px;
+
+    @include tablet {
+      font-size: 1.125rem;
+    }
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    max-height: 400px;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    line-height: 3;
+    writing-mode: vertical-rl;
+
+    p {
+      margin: 0;
+      margin-block-start: 2em;  // 段落と段落の間（左方向の余白）
+
+      &:first-child {
+        margin-block-start: 0;
+      }
+    }
+
+    @include tablet {
+      font-size: 0.875rem;
+       // SP では中央揃えだと折り返しが汚くなるので左揃え
+    }
+  }
+
+  .signature {
+    align-self: flex-end;
+    margin-top: 48px;
+    text-align: right;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    writing-mode: vertical-rl;
+  }
+</style>

@@ -1,0 +1,13 @@
+// ブレークポイント
+$bp-pc: 1024px;
+$bp-tablet: 800px;
+$bp-sp: 600px;
+
+// カラー
+$color-overlay: rgba(0, 0, 0, 0.4); // 40%の黒
+
+// 背景スライドショー
+$bg-slide-count: 5;
+$bg-slide-duration: 5s;   // 1枚の表示時間
+$bg-fade-duration: 1s;    // フェード時間
+$bg-total-duration: calc(#{$bg-slide-count} * #{$bg-slide-duration});

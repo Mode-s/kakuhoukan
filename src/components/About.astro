@@ -1,0 +1,117 @@
+---
+import { Picture } from 'astro:assets';
+
+import miryoku1 from '../assets/images/miryoku01.png';
+import miryoku2 from '../assets/images/miryoku02.png';
+import miryoku3 from '../assets/images/miryoku03.png';
+
+const items = [
+  {
+    image: miryoku1,
+    description: '高さ60mの渓谷の底、切り立った岩の裂け目から轟音と共に噴出す熱湯と蒸気は迫力満点です。'
+  },
+  {
+    image: miryoku2,
+    description: '解放感のある大きな窓、手足を伸ばしてゆったり入れる投函自慢の温泉は、なめらかな湯ざわりで繁樹が少なく肌がスベスベになると女性に好評です。'
+  },
+  {
+    image: miryoku3,
+    description: '女将・若旦那で作るお料理は、山菜やお野菜なども地持にこだわった手作りの郷土の味をご賞味ください。'
+  },
+];
+---
+<section class="section about">
+  <div class="inner">
+    <div class="title-wrapper">
+      <h2 class="title">鶴峯館の魅力</h2>
+    </div>
+    <div class="content">
+      <ul class="list">
+        {items.map((item) => (
+          <li class="card-item">
+            <div class="card-image_wrap">
+              <Picture src={item.image} alt="" widths={[400, 600, 800]} formats={['avif', 'webp']}/>
+            </div>
+            <p class="description">{item.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .content {
+    margin: 60px auto;
+  }
+
+  .title-wrapper {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+  
+  .list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+
+    img {
+      max-width: 200px;
+      max-height: 200px;
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card-item {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 200px;
+  }
+
+  .card-image_wrap {
+    aspect-ratio: 4 / 3;
+    margin: 0 auto;
+  }
+
+  .description {
+    margin-top: 40px;
+    font-size: 0.8rem;
+  }
+</style>

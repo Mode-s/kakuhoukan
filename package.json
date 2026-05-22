@@ -12,6 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.3.7"
+    "astro": "^6.3.7",
+    "simple-icons-astro": "^16.1.0"
+  },
+  "devDependencies": {
+    "sass-embedded": "^1.100.0"
   }
 }

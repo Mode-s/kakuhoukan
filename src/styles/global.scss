@@ -1,0 +1,33 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  // 背景カラー
+  // フォント
+  color: #fff;
+  // 基本フォントサイズ
+  font-size: 1rem;
+  // 基本フォントカラー
+  //基本の行の高さ
+  line-height: 1.8;
+}
+
+a {
+  display: block;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.section {
+  padding: 100px 20px;
+}
+
+.inner {
+  max-width: 1024px;
+  margin: 0 auto;
+}
