@@ -1,13 +1,145 @@
 ---
+const tel = '0183-47-5335';
+const fax = '0183-47-5228';
 ---
 <section class="section contact">
   <div class="inner">
+    <div class="title-wrapper">
+      <h2 class="title">お問い合わせ</h2>
+    </div>
 
+    <div class="content">
+      <p class="lead">
+        ご予約・ご不明な点などございましたら、<br>
+        お電話にてお気軽にお問い合わせくださいませ。
+      </p>
+
+      <div class="tel-block">
+        <p class="tel-label">お電話でのお問い合わせ</p>
+        <a href={`tel:${tel.replace(/-/g, '')}`} class="tel-number">{tel}</a>
+      </div>
+
+      <dl class="detail">
+        <div class="detail__row">
+          <dt class="detail__term">受付時間</dt>
+          <dd class="detail__desc">9:00 〜 20:00</dd>
+        </div>
+        <div class="detail__row">
+          <dt class="detail__term">FAX</dt>
+          <dd class="detail__desc">{fax}</dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
+  /* ===== 見出し（他セクションと共通の装飾線パターン）===== */
+  .title-wrapper {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+
+  /* ===== 本文（中央寄せ）===== */
+  .content {
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .lead {
+    font-size: 0.9rem;
+    line-height: 2.2;
+    letter-spacing: 0.08em;
+  }
+
+  /* ===== 電話番号ブロック（主役）===== */
+  .tel-block {
+    margin-top: 40px;
+  }
+
+  .tel-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    opacity: 0.85;
+  }
+
+  .tel-number {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 3rem;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+
+    @include tablet {
+      font-size: 2.25rem;
+    }
+
+    @include sp {
+      font-size: 1.875rem;
+    }
+  }
+
+  /* ===== 受付時間・FAX（Footer の dl パターンを踏襲）===== */
+  .detail {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 40px;
+    text-align: left;
+  }
+
+  .detail__row {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(232, 224, 200, 0.3);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .detail__term {
+    flex-shrink: 0;
+    min-width: 6em;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+  }
+
+  .detail__desc {
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
 </style>

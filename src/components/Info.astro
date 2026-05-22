@@ -1,13 +1,107 @@
 ---
+const items = [
+  { term: 'チェックイン', desc: '15:00 〜 18:00' },
+  { term: 'チェックアウト', desc: '〜 10:00' },
+  { term: '客室数', desc: '全8室（和室）' },
+  { term: 'お支払い', desc: '現金 / 各種クレジットカード' },
+  { term: '送迎', desc: 'JR湯沢駅より要予約（前日まで）' },
+  { term: '駐車場', desc: '無料 / 10台（予約不要）' },
+  { term: 'Wi-Fi', desc: '全館無料でご利用いただけます' },
+  { term: '泉質', desc: 'ナトリウム-塩化物泉（かけ流し）' },
+];
 ---
 <section class="section info">
   <div class="inner">
-    
+    <div class="title-wrapper">
+      <h2 class="title">ご利用案内</h2>
+    </div>
+
+    <div class="content">
+      <dl class="list">
+        {items.map((item) => (
+          <div class="row">
+            <dt class="term">{item.term}</dt>
+            <dd class="desc">{item.desc}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
+  /* ===== 見出し（他セクションと共通の装飾線パターン）===== */
+  .title-wrapper {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+
+  /* ===== レイアウト：PCは2カラム / tabletで1カラム ===== */
+  .content {
+    margin-top: 60px;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 60px;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      column-gap: 0;
+    }
+  }
+
+  /* ===== 各行（Footer の dl パターンを踏襲）===== */
+  .row {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(232, 224, 200, 0.3);
+  }
+
+  .term {
+    flex-shrink: 0;
+    min-width: 7em;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+  }
+
+  .desc {
+    font-size: 0.875rem;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
 </style>

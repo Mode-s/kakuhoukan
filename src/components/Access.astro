@@ -1,13 +1,151 @@
 ---
+const address = '秋田県湯沢市皆瀬字小湯ノ上3-14';
+// APIキー不要で埋め込める形式。正式な埋め込みコードに差し替えてもOK
+const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=14&output=embed`;
 ---
 <section class="section access">
   <div class="inner">
+    <div class="title-wrapper">
+      <h2 class="title">アクセス</h2>
+    </div>
 
+    <div class="content">
+      <div class="map">
+        <iframe
+          src={mapSrc}
+          title="鶴峯館 周辺地図"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <dl class="info">
+        <div class="info__row">
+          <dt class="info__term">所在地</dt>
+          <dd class="info__desc">
+            〒012-0183<br>
+            秋田県湯沢市皆瀬字小湯ノ上3-14
+          </dd>
+        </div>
+        <div class="info__row">
+          <dt class="info__term">TEL</dt>
+          <dd class="info__desc">0183-47-5335</dd>
+        </div>
+        <div class="info__row">
+          <dt class="info__term">FAX</dt>
+          <dd class="info__desc">0183-47-5228</dd>
+        </div>
+        <div class="info__row">
+          <dt class="info__term">お車で</dt>
+          <dd class="info__desc">湯沢横手道路「湯沢IC」より約40分</dd>
+        </div>
+        <div class="info__row">
+          <dt class="info__term">電車で</dt>
+          <dd class="info__desc">JR「湯沢駅」よりバスで約50分</dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
+  /* ===== 見出し（About / Goaisatsu と共通の装飾線パターン）===== */
+  .title-wrapper {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+
+  /* ===== レイアウト：左に地図 / 右に情報 ===== */
+  .content {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 60px;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* ===== 地図 ===== */
+  .map {
+    aspect-ratio: 4 / 3;
+    border: 1px solid rgba(232, 224, 200, 0.3);
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+
+  /* ===== 情報（Footer の dl パターンを踏襲）===== */
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info__row {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(232, 224, 200, 0.3);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .info__term {
+    flex-shrink: 0;
+    min-width: 5em;
+    font-weight: normal;
+    letter-spacing: 0.1em;
+  }
+
+  .info__desc {
+    font-size: 0.875rem;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+  }
 </style>

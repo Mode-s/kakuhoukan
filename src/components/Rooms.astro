@@ -1,7 +1,107 @@
 ---
+import { Picture } from 'astro:assets';
+import facilityMain from '../assets/images/facility-mainimage.jpg';
+import woodBg from '../assets/images/wood-bg.png';
+import room1 from '../assets/images/room1.png';
+import room2 from '../assets/images/room2.png';
+import room3 from '../assets/images/room3.png';
+import room4 from '../assets/images/room4.png';
+import room5 from '../assets/images/room5.png';
+
+const rooms = [room1, room2, room3, room4, room5];
+
+const plans = [
+  { name: 'リーズナブル',   price: '10,600' },
+  { name: 'スタンダード',   price: '11,700' },
+  { name: 'グレードアップ', price: '12,800' },
+];
+
+const childPrices = [
+  { term: '小学生', desc: '7,950円' },
+  { term: '幼児',   desc: '5,500円' },
+];
+
+const cancellation = [
+  { term: '連絡なしの不泊', desc: '宿泊料金の 100%' },
+  { term: '当日',           desc: '宿泊料金の 80%' },
+  { term: '前日',           desc: '宿泊料金の 50%' },
+];
 ---
 <section class="section room">
   <div class="inner">
+
+    {/* ===== 館内 ===== */}
+    <div class="block facility">
+      <div class="title-wrapper">
+        <h2 class="title">館内</h2>
+      </div>
+      <div class="facility__content">
+        <div class="facility__image">
+          <Picture src={facilityMain} alt="鶴峯館の玄関ホール" widths={[400, 600, 900]} sizes="(max-width: 800px) 100vw, 50vw" formats={['avif', 'webp']} />
+        </div>
+        <p class="facility__text">
+          玄関をはいると直ぐに、吹き抜けの玄関ホール。木の温もりあふれた館内は、心地よい静けさに包まれゆったりと穏やかな時間が流れていきます。山の中の宿だからこそ味わえる贅沢なひとときをどうぞ。
+        </p>
+      </div>
+      <div class="facility__wide">
+        <Picture src={woodBg} alt="館内の様子" widths={[768, 1024, 1280]} sizes="100vw" formats={['avif', 'webp']} />
+      </div>
+    </div>
+
+    {/* ===== 客室 ===== */}
+    <div class="block">
+      <div class="title-wrapper">
+        <h2 class="title">客室</h2>
+      </div>
+      <p class="lead-text">
+        全ての客室は和室。広さや造りが異なり、ご夫婦やご家族、お客様の旅に合わせてお部屋をご用意しております。グループなどでご利用いただける、最大1部屋7名様までお泊まりいただける広いお部屋もございます。浴衣、タオル（バスタオル含む）、歯磨きセットもお部屋に備え付けしております。全館床暖房・冷暖房完備ですので、季節を問わず快適にお過ごしいただけます。
+      </p>
+      <ul class="room-gallery">
+        {rooms.map((src) => (
+          <li class="room-gallery__item">
+            <Picture src={src} alt="客室の一例" widths={[400, 600]} sizes="(max-width: 800px) 50vw, 33vw" formats={['avif', 'webp']} />
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* ===== ご宿泊料金 ===== */}
+    <div class="block">
+      <div class="title-wrapper">
+        <h2 class="title">ご宿泊料金</h2>
+      </div>
+
+      <ul class="plans">
+        {plans.map((plan) => (
+          <li class="plan">
+            <p class="plan__name">{plan.name}</p>
+            <p class="plan__price">{plan.price}<span class="plan__unit">円</span></p>
+            <p class="plan__tax">税込・入湯税込</p>
+          </li>
+        ))}
+      </ul>
+      <p class="note note--center">※価格によってお料理の内容が異なります。</p>
+
+      <h3 class="sub-title">小人料金（お１人様）</h3>
+      <dl class="price-list">
+        {childPrices.map((item) => (
+          <div class="price-list__row">
+            <dt class="price-list__term">{item.term}</dt>
+            <dd class="price-list__desc">{item.desc}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h3 class="sub-title">キャンセルポリシー</h3>
+      <dl class="price-list">
+        {cancellation.map((item) => (
+          <div class="price-list__row">
+            <dt class="price-list__term">{item.term}</dt>
+            <dd class="price-list__desc">{item.desc}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
 
   </div>
 </section>
@@ -9,5 +109,191 @@
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
+  /* ===== 共通：装飾線つき見出し ===== */
+  .title-wrapper {
+    text-align: center;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    font-size: 2rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      max-width: 200px;
+      width: 100%;
+      height: 1px;
+      background: #fff;
+
+      @include tablet {
+        max-width: 100px;
+      }
+
+      @include sp {
+        width: 50px;
+      }
+    }
+  }
+
+  /* ===== ブロック間の余白 ===== */
+  .block + .block {
+    margin-top: 120px;
+
+    @include tablet {
+      margin-top: 80px;
+    }
+  }
+
+  /* ===== 館内 ===== */
+  .facility__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 60px;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .facility__image {
+    aspect-ratio: 4 / 3;
+    @include cover-media;
+  }
+
+  .facility__text {
+    font-size: 0.9rem;
+    line-height: 2.4;
+    letter-spacing: 0.08em;
+  }
+
+  .facility__wide {
+    margin-top: 40px;
+
+    :global(picture) {
+      display: block;
+    }
+
+    :global(img) {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  /* ===== 客室 ===== */
+  .lead-text {
+    max-width: 800px;
+    margin: 60px auto 0;
+    font-size: 0.9rem;
+    line-height: 2.4;
+    letter-spacing: 0.08em;
+  }
+
+  .room-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+
+    @include tablet {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  .room-gallery__item {
+    aspect-ratio: 4 / 3;
+    @include cover-media;
+  }
+
+  /* ===== ご宿泊料金 ===== */
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .plan {
+    padding: 32px 16px;
+    text-align: center;
+    border: 1px solid rgba(232, 224, 200, 0.3);
+  }
+
+  .plan__name {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
+  .plan__price {
+    margin-top: 16px;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .plan__unit {
+    margin-left: 4px;
+    font-size: 1rem;
+  }
+
+  .plan__tax {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    opacity: 0.85;
+  }
+
+  .sub-title {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 1.125rem;
+    letter-spacing: 0.15em;
+
+    @include tablet {
+      font-size: 1rem;
+    }
+  }
+
+  .price-list {
+    max-width: 600px;
+    margin: 24px auto 0;
+  }
+
+  .price-list__row {
+    display: flex;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(232, 224, 200, 0.3);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .price-list__term {
+    flex-shrink: 0;
+    min-width: 10em;
+    font-weight: normal;
+    letter-spacing: 0.08em;
+  }
+
+  .price-list__desc {
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+  }
 </style>

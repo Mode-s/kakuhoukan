@@ -1,13 +1,84 @@
 ---
+// movie.mp4 は public/ 直下に配置してください（/movie.mp4 で参照されます）
+const catchLines = [
+  '山のしじまに抱かれて',
+  '渓谷の湯宿で過ごす、静かなひととき',
+];
 ---
 <section class="hero">
-  <div class="inner">
+  <video
+    class="hero__video"
+    src="/movie.mp4"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  ></video>
+  <div class="hero__overlay"></div>
 
+  <div class="hero__inner">
+    <div class="hero__catch">
+      {catchLines.map((line) => (
+        <p>{line}</p>
+      ))}
+    </div>
   </div>
 </section>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
+  .hero {
+    position: relative;
+    isolation: isolate;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .hero__video {
+    position: absolute;
+    inset: 60px;
+    width: calc(100% - 120px);
+    height: calc(100% - 120px);
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero__overlay {
+    position: absolute;
+    inset: 60px;
+    background: $color-overlay;
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero__catch {
+    writing-mode: vertical-rl;
+    font-size: 1.75rem;
+    letter-spacing: 0.25em;
+    line-height: 1.8;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+
+    @include tablet {
+      font-size: 1.25rem;
+    }
+
+    p {
+      margin: 0;
+      margin-block-start: 1.5em;
+
+      &:first-child {
+        margin-block-start: 0;
+      }
+    }
+  }
 </style>
