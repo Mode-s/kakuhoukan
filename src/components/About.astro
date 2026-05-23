@@ -20,13 +20,13 @@ const items = [
   },
 ];
 ---
-<section class="section about">
+<section id="about" class="section about">
   <div class="inner">
-    <div class="title-wrapper">
+    <div class="title-wrapper" data-animate="title">
       <h2 class="title">鶴峯館の魅力</h2>
     </div>
     <div class="content">
-      <ul class="list">
+      <ul class="list" data-animate="stagger">
         {items.map((item) => (
           <li class="card-item">
             <div class="card-image_wrap">

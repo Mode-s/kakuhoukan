@@ -27,36 +27,36 @@ const cancellation = [
   { term: '前日',           desc: '宿泊料金の 50%' },
 ];
 ---
-<section class="section room">
+<section id="room" class="section room">
   <div class="inner">
 
     {/* ===== 館内 ===== */}
     <div class="block facility">
-      <div class="title-wrapper">
+      <div class="title-wrapper" data-animate="title">
         <h2 class="title">館内</h2>
       </div>
       <div class="facility__content">
-        <div class="facility__image">
+        <div class="facility__image" data-animate="scale-in">
           <Picture src={facilityMain} alt="鶴峯館の玄関ホール" widths={[400, 600, 900]} sizes="(max-width: 800px) 100vw, 50vw" formats={['avif', 'webp']} />
         </div>
-        <p class="facility__text">
+        <p class="facility__text" data-animate="fade-up">
           玄関をはいると直ぐに、吹き抜けの玄関ホール。木の温もりあふれた館内は、心地よい静けさに包まれゆったりと穏やかな時間が流れていきます。山の中の宿だからこそ味わえる贅沢なひとときをどうぞ。
         </p>
       </div>
-      <div class="facility__wide">
+      <div class="facility__wide" data-animate="fade-in">
         <Picture src={woodBg} alt="館内の様子" widths={[768, 1024, 1280]} sizes="100vw" formats={['avif', 'webp']} />
       </div>
     </div>
 
     {/* ===== 客室 ===== */}
     <div class="block">
-      <div class="title-wrapper">
+      <div class="title-wrapper" data-animate="title">
         <h2 class="title">客室</h2>
       </div>
-      <p class="lead-text">
+      <p class="lead-text" data-animate="fade-up">
         全ての客室は和室。広さや造りが異なり、ご夫婦やご家族、お客様の旅に合わせてお部屋をご用意しております。グループなどでご利用いただける、最大1部屋7名様までお泊まりいただける広いお部屋もございます。浴衣、タオル（バスタオル含む）、歯磨きセットもお部屋に備え付けしております。全館床暖房・冷暖房完備ですので、季節を問わず快適にお過ごしいただけます。
       </p>
-      <ul class="room-gallery">
+      <ul class="room-gallery" data-animate="stagger">
         {rooms.map((src) => (
           <li class="room-gallery__item">
             <Picture src={src} alt="客室の一例" widths={[400, 600]} sizes="(max-width: 800px) 50vw, 33vw" formats={['avif', 'webp']} />
@@ -67,11 +67,11 @@ const cancellation = [
 
     {/* ===== ご宿泊料金 ===== */}
     <div class="block">
-      <div class="title-wrapper">
+      <div class="title-wrapper" data-animate="title">
         <h2 class="title">ご宿泊料金</h2>
       </div>
 
-      <ul class="plans">
+      <ul class="plans" data-animate="stagger">
         {plans.map((plan) => (
           <li class="plan">
             <p class="plan__name">{plan.name}</p>
@@ -80,10 +80,10 @@ const cancellation = [
           </li>
         ))}
       </ul>
-      <p class="note note--center">※価格によってお料理の内容が異なります。</p>
+      <p class="note note--center" data-animate="fade-up">※価格によってお料理の内容が異なります。</p>
 
-      <h3 class="sub-title">小人料金（お１人様）</h3>
-      <dl class="price-list">
+      <h3 class="sub-title" data-animate="fade-up">小人料金（お１人様）</h3>
+      <dl class="price-list" data-animate="fade-up">
         {childPrices.map((item) => (
           <div class="price-list__row">
             <dt class="price-list__term">{item.term}</dt>
@@ -92,8 +92,8 @@ const cancellation = [
         ))}
       </dl>
 
-      <h3 class="sub-title">キャンセルポリシー</h3>
-      <dl class="price-list">
+      <h3 class="sub-title" data-animate="fade-up">キャンセルポリシー</h3>
+      <dl class="price-list" data-animate="fade-up">
         {cancellation.map((item) => (
           <div class="price-list__row">
             <dt class="price-list__term">{item.term}</dt>

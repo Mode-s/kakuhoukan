@@ -2,24 +2,24 @@
 const tel = '0183-47-5335';
 const fax = '0183-47-5228';
 ---
-<section class="section contact">
+<section id="contact" class="section contact">
   <div class="inner">
-    <div class="title-wrapper">
+    <div class="title-wrapper" data-animate="title">
       <h2 class="title">お問い合わせ</h2>
     </div>
 
     <div class="content">
-      <p class="lead">
+      <p class="lead" data-animate="fade-up">
         ご予約・ご不明な点などございましたら、<br>
         お電話にてお気軽にお問い合わせくださいませ。
       </p>
 
-      <div class="tel-block">
+      <div class="tel-block" data-animate="fade-up">
         <p class="tel-label">お電話でのお問い合わせ</p>
         <a href={`tel:${tel.replace(/-/g, '')}`} class="tel-number">{tel}</a>
       </div>
 
-      <dl class="detail">
+      <dl class="detail" data-animate="fade-up">
         <div class="detail__row">
           <dt class="detail__term">受付時間</dt>
           <dd class="detail__desc">9:00 〜 20:00</dd>

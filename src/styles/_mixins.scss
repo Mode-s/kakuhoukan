@@ -7,7 +7,7 @@
 }
 
 @mixin sp {
-  @media (max-width: $bp-tablet) {
+  @media (max-width: $bp-sp) {
     @content;
   }
 }

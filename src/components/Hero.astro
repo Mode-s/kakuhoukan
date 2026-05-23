@@ -5,24 +5,33 @@ const catchLines = [
   '渓谷の湯宿で過ごす、静かなひととき',
 ];
 ---
-<section class="hero">
-  <video
-    class="hero__video"
-    src="/movie.mp4"
-    autoplay
-    muted
-    loop
-    playsinline
-    preload="auto"
-  ></video>
-  <div class="hero__overlay"></div>
+<section id="hero" class="hero">
+  <div class="hero__layout">
+    <div class="hero__media">
+      <div class="hero__frame">
+        <video
+          class="hero__video"
+          src="/movie.mp4"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        ></video>
+        <div class="hero__overlay" aria-hidden="true"></div>
+      </div>
+    </div>
 
-  <div class="hero__inner">
     <div class="hero__catch">
       {catchLines.map((line) => (
         <p>{line}</p>
       ))}
     </div>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <span class="hero__scroll-line"></span>
+    <span class="hero__scroll-text">scroll</span>
   </div>
 </section>
 
@@ -33,52 +42,171 @@ const catchLines = [
   .hero {
     position: relative;
     isolation: isolate;
-    height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 20px 48px;
     overflow: hidden;
+
+    @include sp {
+      padding: 72px 12px 24px;
+    }
+  }
+
+  .hero__layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    flex: 1;
+
+    @include sp {
+      gap: 24px;
+    }
+  }
+
+  .hero__media {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__frame {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+    @include sp {
+      padding: 8px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      pointer-events: none;
+
+      @include sp {
+        inset: 3px;
+      }
+    }
   }
 
   .hero__video {
-    position: absolute;
-    inset: 60px;
-    width: calc(100% - 120px);
-    height: calc(100% - 120px);
-    object-fit: cover;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    max-height: min(52svh, calc(100svh - 300px));
+    height: auto;
+    object-fit: contain;
     object-position: center;
+
+    @include sp {
+      max-height: min(42svh, calc(100svh - 280px));
+    }
   }
 
   .hero__overlay {
     position: absolute;
-    inset: 60px;
-    background: $color-overlay;
-  }
+    inset: 12px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0.35) 100%
+    );
+    pointer-events: none;
 
-  .hero__inner {
-    position: relative;
-    z-index: 1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include sp {
+      inset: 8px;
+    }
   }
 
   .hero__catch {
-    writing-mode: vertical-rl;
-    font-size: 1.75rem;
-    letter-spacing: 0.25em;
-    line-height: 1.8;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    font-family: $font-heading;
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    font-weight: 500;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    letter-spacing: 0.15em;
+    line-height: 2;
+    text-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    max-width: 480px;
 
-    @include tablet {
-      font-size: 1.25rem;
+    &::before {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 1px;
+      margin-inline: auto;
+      margin-block-end: 1em;
+      background: rgba(255, 255, 255, 0.5);
+    }
+
+    @include sp {
+      max-width: 100%;
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      line-height: 1.9;
     }
 
     p {
       margin: 0;
-      margin-block-start: 1.5em;
+      margin-block-start: 0.75em;
 
       &:first-child {
         margin-block-start: 0;
       }
     }
+  }
+
+  .hero__scroll {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    opacity: 0.6;
+
+    @include sp {
+      margin-top: 16px;
+    }
+  }
+
+  .hero__scroll-line {
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent);
+    transform-origin: top center;
+
+    @include sp {
+      height: 24px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transform: none !important;
+      opacity: 0.6;
+    }
+  }
+
+  .hero__scroll-text {
+    font-family: $font-heading;
+    font-size: 0.625rem;
+    letter-spacing: 0.3em;
+    text-transform: lowercase;
   }
 </style>

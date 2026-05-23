@@ -11,3 +11,7 @@ $bg-slide-count: 5;
 $bg-slide-duration: 5s;   // 1枚の表示時間
 $bg-fade-duration: 1s;    // フェード時間
 $bg-total-duration: calc(#{$bg-slide-count} * #{$bg-slide-duration});
+
+// フォント
+$font-base: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+$font-heading: 'Zen Old Mincho', 'Shippori Mincho', serif;

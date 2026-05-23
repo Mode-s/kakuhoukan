@@ -1,31 +1,130 @@
 ---
 import { Picture } from 'astro:assets';
 import logo from '../assets/images/logo.png';
+
+const navItems = [
+  { href: '#hero', label: 'ホーム' },
+  { href: '#about', label: '当館について' },
+  { href: '#room', label: '館内・料金' },
+  { href: '#access', label: 'アクセス' },
+  { href: '#contact', label: '予約' },
+];
 ---
 <header class="header">
   <div class="header-inner">
     <h1 class="logo-wrapper">
-      <a href="/" class="logo-link">
+      <a href="#hero" class="logo-link">
         <Picture src={logo} alt="おやど 鶴峯館" />
       </a>
     </h1>
-    <navigation class="navigation">
+
+    <button
+      type="button"
+      class="menu-btn"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+      aria-label="メニューを開く"
+    >
+      <span class="menu-btn__line"></span>
+      <span class="menu-btn__line"></span>
+      <span class="menu-btn__line"></span>
+    </button>
+
+    <nav class="navigation" id="nav-menu" aria-label="メインナビゲーション">
       <ul class="list">
-        <li class="item"><a href="/" class="link">ホーム</a></li>
-        <li class="item"><a href="/" class="link">ごあいさつ</a></li>
-        <li class="item"><a href="/" class="link">館内・料金</a></li>
-        <li class="item"><a href="/" class="link">当館について</a></li>
-        <li class="item"><a href="/" class="link">アクセス</a></li>
-        <li class="item"><a href="/" class="link">予約</a></li>
+        {navItems.map((item) => (
+          <li class="item">
+            <a href={item.href} class="link">{item.label}</a>
+          </li>
+        ))}
       </ul>
-    </navigation>
+    </nav>
   </div>
 </header>
+
+<script>
+  import gsap from 'gsap';
+
+  const menuBtn = document.querySelector('.menu-btn');
+  const navigation = document.querySelector('.navigation');
+  const navItems = navigation?.querySelectorAll('.item');
+
+  const animateMobileMenu = (isOpen: boolean) => {
+    if (!navItems || !window.matchMedia('(max-width: 800px)').matches) return;
+
+    if (isOpen) {
+      gsap.fromTo(
+        navItems,
+        { autoAlpha: 0, y: 24 },
+        { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.15 },
+      );
+    } else {
+      gsap.set(navItems, { clearProps: 'all' });
+    }
+  };
+
+  const closeMenu = () => {
+    navigation?.classList.remove('is-open');
+    menuBtn?.classList.remove('is-open');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+    menuBtn?.setAttribute('aria-label', 'メニューを開く');
+    document.body.classList.remove('is-menu-open');
+    animateMobileMenu(false);
+  };
+
+  menuBtn?.addEventListener('click', () => {
+    const isOpen = navigation?.classList.toggle('is-open');
+    menuBtn.classList.toggle('is-open', isOpen);
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+    menuBtn.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+    document.body.classList.toggle('is-menu-open', isOpen);
+    if (isOpen) animateMobileMenu(true);
+  });
+
+  navigation?.querySelectorAll('.link').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href');
+      if (!href?.startsWith('#')) return;
+
+      event.preventDefault();
+      closeMenu();
+
+      const target = document.querySelector(href);
+      target?.scrollIntoView({ behavior: 'smooth' });
+      history.pushState(null, '', href);
+    });
+  });
+
+  document.querySelector('.logo-link')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    closeMenu();
+    document.querySelector('#hero')?.scrollIntoView({ behavior: 'smooth' });
+    history.pushState(null, '', '#hero');
+  });
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMenu();
+  });
+
+  const scrollToHash = (hash: string) => {
+    if (!hash.startsWith('#')) return;
+    const target = document.querySelector(hash);
+    target?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  if (window.location.hash) {
+    requestAnimationFrame(() => scrollToHash(window.location.hash));
+  }
+
+  window.addEventListener('hashchange', () => {
+    scrollToHash(window.location.hash);
+  });
+</script>
 
 <style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
-  
+
   .header {
     position: absolute;
     top: 0;
@@ -40,21 +139,109 @@ import logo from '../assets/images/logo.png';
     justify-content: space-between;
     max-width: 1024px;
     margin: 0 auto;
-    padding: 10px 50px 10px 0;
+    padding: 10px 20px;
+
+    @include tablet {
+      padding: 12px 16px;
+    }
+  }
+
+  .logo-link :global(img) {
+    max-height: 56px;
+    width: auto;
+
+    @include tablet {
+      max-height: 44px;
+    }
+  }
+
+  .menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    z-index: 30;
+
+    @include tablet {
+      display: flex;
+    }
+  }
+
+  .menu-btn__line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #fff;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .menu-btn.is-open {
+    .menu-btn__line:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-btn__line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-btn__line:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
   }
 
   .navigation {
     @include tablet {
-      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.92);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+
+      &.is-open {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
   .list {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
     gap: 20px;
     padding-top: 40px;
     writing-mode: vertical-lr;
+
+    @include tablet {
+      writing-mode: horizontal-tb;
+      align-items: center;
+      padding-top: 0;
+      gap: 28px;
+    }
+  }
+
+  .link {
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    transition: opacity 0.2s ease;
+
+    @include tablet {
+      font-size: 1.125rem;
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 </style>

@@ -3,14 +3,14 @@ const address = '秋田県湯沢市皆瀬字小湯ノ上3-14';
 // APIキー不要で埋め込める形式。正式な埋め込みコードに差し替えてもOK
 const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=14&output=embed`;
 ---
-<section class="section access">
+<section id="access" class="section access">
   <div class="inner">
-    <div class="title-wrapper">
+    <div class="title-wrapper" data-animate="title">
       <h2 class="title">アクセス</h2>
     </div>
 
     <div class="content">
-      <div class="map">
+      <div class="map" data-animate="scale-in">
         <iframe
           src={mapSrc}
           title="鶴峯館 周辺地図"
@@ -20,7 +20,7 @@ const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=
         ></iframe>
       </div>
 
-      <dl class="info">
+      <dl class="info" data-animate="fade-up">
         <div class="info__row">
           <dt class="info__term">所在地</dt>
           <dd class="info__desc">
