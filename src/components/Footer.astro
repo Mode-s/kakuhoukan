@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import footerBg from '../assets/images/footer-bg.png';
 import footerLogo from '../assets/images/footer-logo.gif';
 ---
 <footer class="footer">
@@ -37,13 +36,13 @@ import footerLogo from '../assets/images/footer-logo.gif';
   <small class="copyright">&copy; 2026 鶴峯館</small>
 </footer>
 
-<style lang="scss" define:vars={{ footerBgUrl: `url(${footerBg.src})` }}>
+<style lang="scss">
   @use '../styles/variables' as *;
   @use '../styles/mixins' as *;
   
   .footer {
     width: 100%;
-    background-image: var(--footerBgUrl);
+    background-image: url('../assets/images/footer-bg.png');
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;

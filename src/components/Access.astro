@@ -2,6 +2,23 @@
 const address = '秋田県湯沢市皆瀬字小湯ノ上3-14';
 // APIキー不要で埋め込める形式。正式な埋め込みコードに差し替えてもOK
 const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=14&output=embed`;
+
+// 交通アクセスの詳細（見出し＋詳細リスト）
+const accessRoutes = [
+  {
+    heading: 'お車でお越しの方',
+    items: [
+      '東北自動車道 湯沢ICより 国道398号線 約67km・約100分（冬期は通行止めになります）',
+      '秋田自動車道 湯沢ICより 国道398号線 約30km・約45分',
+    ],
+  },
+  {
+    heading: '公共交通機関でお越しの方',
+    items: [
+      'JR奥羽本線 湯沢駅よりバス（小安温泉方面）乗車、小安温泉下車 徒歩2分',
+    ],
+  },
+];
 ---
 <section id="access" class="section access">
   <div class="inner">
@@ -36,15 +53,20 @@ const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=
           <dt class="info__term">FAX</dt>
           <dd class="info__desc">0183-47-5228</dd>
         </div>
-        <div class="info__row">
-          <dt class="info__term">お車で</dt>
-          <dd class="info__desc">湯沢横手道路「湯沢IC」より約40分</dd>
-        </div>
-        <div class="info__row">
-          <dt class="info__term">電車で</dt>
-          <dd class="info__desc">JR「湯沢駅」よりバスで約50分</dd>
-        </div>
       </dl>
+    </div>
+    {/* ===== 交通アクセス詳細 ===== */}
+    <div class="routes" data-animate="fade-up">
+      {accessRoutes.map((route) => (
+        <div class="routes__block">
+          <h3 class="routes__heading">{route.heading}</h3>
+          <ul class="routes__list">
+            {route.items.map((item) => (
+              <li class="routes__item">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -147,5 +169,97 @@ const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=
     font-size: 0.875rem;
     line-height: 1.9;
     letter-spacing: 0.05em;
+  }
+
+    /* ===== 交通アクセス詳細 ===== */
+    .routes {
+    margin-top: 60px;
+
+    @include tablet {
+      margin-top: 48px;
+    }
+  }
+
+  .routes__block + .routes__block {
+    margin-top: 40px;
+
+    @include sp {
+      margin-top: 32px;
+    }
+  }
+
+  /* 見出し：先頭にひし形アイコン＋下線 */
+  .routes__heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(232, 224, 200, 0.3);
+    font-family: $font-heading;
+    font-weight: 500;
+    font-size: 1.25rem;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+
+    @include tablet {
+      font-size: 1.125rem;
+    }
+
+    @include sp {
+      font-size: 1rem;
+      gap: 10px;
+      padding-bottom: 12px;
+    }
+
+    &::before {
+      content: '';
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      background: currentColor;
+      transform: rotate(45deg); // 正方形を回転してひし形に
+
+      @include sp {
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  /* 詳細リスト：先頭に短いダッシュ＋ぶら下げインデント */
+  .routes__list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    @include sp {
+      margin-top: 18px;
+      gap: 12px;
+    }
+  }
+
+  .routes__item {
+    position: relative;
+    padding-left: 1.4em;
+    font-size: 0.95rem;
+    line-height: 1.9;
+    letter-spacing: 0.05em;
+
+    @include sp {
+      font-size: 0.85rem;
+      padding-left: 1.2em;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.85em;
+      left: 0;
+      width: 0.7em;
+      height: 1px;
+      background: currentColor;
+      opacity: 0.7;
+    }
   }
 </style>
