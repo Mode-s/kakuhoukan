@@ -11,14 +11,14 @@ import room5 from '../assets/images/room5.png';
 const rooms = [room1, room2, room3, room4, room5];
 
 const plans = [
-  { name: 'リーズナブル',   price: '10,600' },
-  { name: 'スタンダード',   price: '11,700' },
-  { name: 'グレードアップ', price: '12,800' },
+  { name: 'リーズナブル',   price: '11,700' },
+  { name: 'スタンダード',   price: '12,800' },
+  { name: 'グレードアップ', price: '13,900' },
 ];
 
 const childPrices = [
-  { term: '小学生', desc: '7,950円' },
-  { term: '幼児',   desc: '5,500円' },
+  { term: '子供', desc: '1泊2食　8,800円' },
+  { term: '幼児',   desc: '1泊2食　6,050円' },
 ];
 
 const cancellation = [
@@ -54,7 +54,7 @@ const cancellation = [
         <h2 class="title">客室</h2>
       </div>
       <p class="lead-text" data-animate="fade-up">
-        全ての客室は和室。広さや造りが異なり、ご夫婦やご家族、お客様の旅に合わせてお部屋をご用意しております。グループなどでご利用いただける、最大1部屋7名様までお泊まりいただける広いお部屋もございます。浴衣、タオル（バスタオル含む）、歯磨きセットもお部屋に備え付けしております。全館床暖房・冷暖房完備ですので、季節を問わず快適にお過ごしいただけます。
+        全ての客室は和室。広さや造りが異なり、ご夫婦やご家族、お客様の旅に合わせてお部屋をご用意しております。グループなどでご利用いただける、最大1部屋6名様までお泊まりいただける広いお部屋もございます。浴衣、タオル（バスタオル含む）、歯磨きセットもお部屋に備え付けしております。全館床暖房・冷暖房完備ですので、季節を問わず快適にお過ごしいただけます。
       </p>
       <ul class="room-gallery" data-animate="stagger">
         {rooms.map((src) => (
